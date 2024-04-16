@@ -1,10 +1,13 @@
+#
 from flask_sqlalchemy import SQLAlchemy
-
+#mports the SQLAlchemy extension that provide tools in flaks applications
 db = SQLAlchemy()
-
+#it creates an instance of sqlalchemy that is used to interact with database
 class Hero(db.Model):
+    # the hero inherits from db model
+    #db model base class defining database models
     __tablename__ = 'heroes'
-
+#specifies the name of the database table
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     super_name = db.Column(db.String(50), nullable=False)

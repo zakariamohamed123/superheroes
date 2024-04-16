@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-
+#how to fill a database with simple data using flask sql alchemy
 from app import app, db
+#mports the Flask application instance (app) and the SQLAlchemy object (db) from the app module. These are needed to interact with the Flask application and the database.
 from models import Hero, Power, HeroPower
+#they rep tables in the database
 import random 
 from sqlalchemy import func 
-
+#database population
+#opens a flask applications
 with app.app_context():
     # Delete existing data
     HeroPower.query.delete()

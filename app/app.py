@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+#database schema for storing about heroes powers and relationships
 from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
 import os
@@ -14,22 +14,28 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 
-
+#database initializations
 migrate = Migrate(app, db)
+# initializes flask migrate extension with flask application
 db.init_app(app)
-
+#with sql alchemy database instance
 # Routes
 
 @app.route('/')
+#defines a route for the homepage returning json indicating superheroes rule
 def home():
     return jsonify({'message':'superheroes rule'})
 
+
+
 @app.route('/heroes', methods=['GET'])
 def get_heroes():
+ #to retrieve all heroes from database  
     heroes = Hero.query.all()
     return jsonify([{'id': hero.id, 'name': hero.name, 'super_name': hero.super_name} for hero in heroes])
 
 @app.route('/heroes/<int:hero_id>', methods=['GET'])
+#a specific hero by id 
 def get_hero(hero_id):
     hero = Hero.query.filter(Hero.id == hero_id).first()
 
@@ -55,6 +61,7 @@ def get_powers():
     return jsonify([{'id': power.id, 'name': power.name, 'description': power.description} for power in powers])
 
 @app.route('/powers/<int:power_id>', methods=['GET', 'PATCH'])
+#a specific power by id
 def get_or_update_power(power_id):
     power = Power.query.get(power_id)
 
@@ -64,6 +71,7 @@ def get_or_update_power(power_id):
     if request.method == 'GET':
         return jsonify({'id': power.id, 'name': power.name, 'description': power.description})
     elif request.method == 'PATCH':
+        #updates
         data = request.get_json()
         if 'description' in data:
             power.description = data['description']
@@ -76,4 +84,6 @@ def get_or_update_power(power_id):
                 return jsonify({'errors': ['Validation errors']}), 400
 
 if __name__ == '__main__':
-    app.run(port=5555)
+#ensures flask devt starts if scripts is executed directly
+    app.run(debug=True ,port=5555)
+#export FLASK_RUN_PORT=5555
