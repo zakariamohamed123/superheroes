@@ -1,4 +1,4 @@
-#
+#a database schema for storing information about heroes powers and their relationships
 from flask_sqlalchemy import SQLAlchemy
 #mports the SQLAlchemy extension that provide tools in flaks applications
 db = SQLAlchemy()

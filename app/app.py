@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#database schema for storing about heroes powers and relationships
+#basic api managing super heroes and powers
 from flask import Flask, jsonify, request, make_response
 from flask_migrate import Migrate
 import os
